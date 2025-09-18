@@ -1,15 +1,22 @@
-from optimizer import find_market
-while True:
-    print("1-alışveriniz için en uygun marketler"
-          "2- ürünlerin fiyat tahminleri")
-    secim=int(input("uygun seçimi yapınız:"))
-    if secim==1:
-        butce=int(input("bütçenizi giriniz:"))
-        urunler=input("sepetinize eklemek istediğiniz urunleri seçiniz:").split()
-        liste,sonuc=find_market(butce,urunler)
-        print(liste)
-        print(sonuc)
-    elif secim==2:
-        print("çok yakında hizmete açılacaktır")
-    else:
-        break
+from optimizer import  optimize_market
+import  pandas as pd
+
+urunler=input("almak istediğiniz urunleri giriniz:").split()
+miktarlar=list(map(int,input("ürünlerin miktarlarını giriniz:").split()))
+butce=int(input("bütçenizi giriniz:"))
+
+musteri_dic={"ürün":urunler,"miktar":miktarlar}
+
+df_musteri=pd.DataFrame(musteri_dic)
+
+print(df_musteri)
+
+toplam_maliyet,secimler=optimize_market(df_musteri,butce)
+
+if secimler:
+    print(f"en düşük maliyet : {toplam_maliyet} TL")
+    for urun,market,maliyet in secimler:
+        print(f"{urun} : {market} , maliyet = {maliyet}")
+else:
+    print("bütçe yetersiz,hiçbir kombinasyon uygun değil.")
+
