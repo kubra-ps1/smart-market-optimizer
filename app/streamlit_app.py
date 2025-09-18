@@ -56,9 +56,6 @@ if st.button("Optimizasyonu Hesapla"):
     else:
         st.error("Bütçe yetersiz, hiçbir kombinasyon uygun değil.")
 
-
-
-
 df = load_data()
 
 st.title("Ürün Fiyat Grafiği")
